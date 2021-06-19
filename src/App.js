@@ -27,12 +27,16 @@ class App extends React.Component {
     fetch('http://localhost:8000/api/tiles/')
     .then(response => response.json())
     .then(data =>
-      console.log('Data:', data)
+      this.setState({
+        tileList:data,
+      })
       )
   }
 
-  render(){
+  handleChange()
 
+  render(){
+    var tiles = this.state.tileList
     return(
       <div className="container">
         <div id="tile-container">
@@ -50,6 +54,30 @@ class App extends React.Component {
 
               </div>
             </form>
+          </div>
+
+          <div id="list-wrapper">
+            {tiles.map(function(tile, index){
+              return(
+                <div key={index} className="tile-wrapper">
+
+                  <span>{tile.title}</span>
+                  <span>{tile.launch_date}</span>
+                  <span>{tile.status}</span>
+
+                  <div style={{flex:1}}>
+                    <button className="btn btn-sm btn-outline-info">Edit </button>
+                  </div>
+
+                  <div style={{flex:1}}>
+                    <button className="btn btn-sm btn-outline-danger">Delete </button>
+                  </div>
+
+
+                </div>
+
+                )
+            })}
           </div>
         </div>
       </div>
